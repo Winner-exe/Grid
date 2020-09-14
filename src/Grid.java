@@ -38,5 +38,6 @@ public class Grid extends JPanel
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+		//To be implemented.
 	}
 }
