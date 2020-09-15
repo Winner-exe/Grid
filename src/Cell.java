@@ -11,7 +11,10 @@ import javax.swing.border.LineBorder;
 public class Cell extends JComponent
 {
 	private static final long serialVersionUID = -3059067480908071499L;
-	private int x, y, width, height;
+	private final int x;
+	private final int y;
+	private final int width;
+	private final int height;
 
 	/*
 	 * Constructs a new Cell whose upper-left corner is specified as (x,y) and whose width and height are specified by the arguments of the same name.
@@ -51,6 +54,7 @@ public class Cell extends JComponent
 	 * 
 	 * @return the x-coordinate of this Cell's upper left hand corner
 	 */
+	@Override
 	public int getX()
 	{
 		return x;
@@ -61,6 +65,7 @@ public class Cell extends JComponent
 	 * 
 	 * @return the y-coordinate of this Cell's upper left hand corner
 	 */
+	@Override
 	public int getY()
 	{
 		return y;
@@ -71,6 +76,7 @@ public class Cell extends JComponent
 	 * 
 	 * @return the width of this cell
 	 */
+	@Override
 	public int getWidth()
 	{
 		return width;
@@ -81,6 +87,7 @@ public class Cell extends JComponent
 	 * 
 	 * @return the height of this cell
 	 */
+	@Override
 	public int getHeight()
 	{
 		return height;

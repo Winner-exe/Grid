@@ -11,7 +11,7 @@ public class Grid extends JPanel
 {
 	private static final long serialVersionUID = 2892865424401791072L;
 	private final int CELL_WIDTH, CELL_HEIGHT;
-	private Cell[][] grid;
+	private final Cell[][] grid;
 	
 	/*
 	 * Constructs a panel with a 10 x 10 grid.
