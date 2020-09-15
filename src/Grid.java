@@ -2,16 +2,20 @@ import java.awt.*;
 
 import javax.swing.JPanel;
 
+/*
+ * The base class representing a 10 x 10 grid.
+ * 
+ * @author Winston Lee
+ */
 public class Grid extends JPanel
 {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2892865424401791072L;
 	private final int CELL_WIDTH, CELL_HEIGHT;
 	private Cell[][] grid;
 	
+	/*
+	 * Constructs a panel with a 10 x 10 grid.
+	 */
 	public Grid()
 	{
 		this.setLayout(null);
@@ -33,7 +37,12 @@ public class Grid extends JPanel
 		
 		this.repaint();
 	}
-	
+
+	/*
+	 * Paints the interior of this Cell.
+	 * 
+	 * @param g the the <code>Graphics</code> object to protect
+	 */
 	@Override
 	public void paintComponent(Graphics g)
 	{

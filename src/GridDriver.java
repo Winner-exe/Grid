@@ -1,6 +1,11 @@
 import javax.swing.JFrame;
 
-public final class Driver {
+/*
+ * Driver for the Grid project.
+ * 
+ * @author Winston Lee
+ */
+public final class GridDriver {
 
 	public static void main(String[] args)
 	{
