@@ -16,7 +16,7 @@ public class Grid extends JPanel
 	/*
 	 * Constructs a panel with a 10 x 10 grid.
 	 */
-	public Grid()
+	public Grid(int rows, int columns)
 	{
 		this.setLayout(null);
 		this.setBackground(Color.BLACK);
@@ -24,7 +24,7 @@ public class Grid extends JPanel
 		CELL_WIDTH = 100;
 		CELL_HEIGHT = 100;
 		
-		grid = new Cell[10][10];
+		grid = new Cell[rows][columns];
 		
 		for (int i = 1; i <= grid.length; i++)
 		{
