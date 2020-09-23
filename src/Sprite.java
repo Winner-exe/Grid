@@ -14,9 +14,10 @@ public class Sprite implements Iterable<BufferedImage>
 	{
 		try
 		{
-			img = ImageIO.read(new File(fileName));
+			img = ImageIO.read(new File("C:\\Users\\Winst\\OneDrive\\Advanced Computer Science\\Grid\\src",
+					fileName));
 		}
-		catch(IOException e)
+		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -50,9 +51,7 @@ public class Sprite implements Iterable<BufferedImage>
 		@Override
 		public boolean hasNext()
 		{
-			if (cursorRow < rows && cursorColumn < columns)
-				return true;
-			return false;
+			return cursorRow < rows && cursorColumn < columns;
 		}
 
 		@Override

@@ -9,7 +9,7 @@ public class SpritePanel extends JPanel implements ActionListener
 
     public SpritePanel()
     {
-        sprite = new Sprite("sprite.png", 9, 6);
+        sprite = new Sprite("sprite.png", 6, 9);
         timer = new Timer(500, this);
 
         this.repaint();
