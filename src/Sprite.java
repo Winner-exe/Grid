@@ -14,8 +14,7 @@ public class Sprite implements Iterable<BufferedImage>
 	{
 		try
 		{
-			img = ImageIO.read(new File("C:\\Users\\Winst\\OneDrive\\Advanced Computer Science\\Grid\\src",
-					fileName));
+			img = ImageIO.read(new File(fileName));
 		}
 		catch(Exception e)
 		{

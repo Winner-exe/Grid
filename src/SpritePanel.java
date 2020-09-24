@@ -25,6 +25,7 @@ public class SpritePanel extends JPanel implements ActionListener
     @Override
     public void paintComponent(Graphics g)
     {
+        super.paintComponent(g);
         sprite.draw((Graphics2D) g, 50, 50, this);
     }
 }
