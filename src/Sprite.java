@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import java.nio.file.*;
 import java.awt.Graphics2D;
 import java.awt.image.*;
 import javax.imageio.*;
@@ -14,7 +15,8 @@ public class Sprite implements Iterable<BufferedImage>
 	{
 		try
 		{
-			img = ImageIO.read(new File(fileName));
+			File f = Path.of("src", fileName).toAbsolutePath().toFile();
+			img = ImageIO.read(f);
 		}
 		catch(Exception e)
 		{
