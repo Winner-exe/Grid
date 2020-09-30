@@ -3,7 +3,7 @@ import java.awt.*;
 import javax.swing.JComponent;
 import javax.swing.border.LineBorder;
 
-/*
+/**
  * The base class representing a single cell in a grid.
  * 
  * @author Winston Lee
@@ -16,7 +16,7 @@ public class Cell extends JComponent
 	private final int width;
 	private final int height;
 
-	/*
+	/**
 	 * Constructs a new Cell whose upper-left corner is specified as (x,y) and whose width and height are specified by the arguments of the same name.
 	 * 
 	 * @param x the specified X coordinate
@@ -36,7 +36,7 @@ public class Cell extends JComponent
 		setBorder(new LineBorder(Color.WHITE));
 	}
 
-	/*
+	/**
 	 * Checks whether this Cell "contains" the specified point, where x and y are defined to be relative to the coordinate system of this component.
 	 * 
 	 * @param x the x coordinate of the point
@@ -49,7 +49,7 @@ public class Cell extends JComponent
 		return getBounds().contains(x, y);
 	}
 
-	/*
+	/**
 	 * Gets the x-coordinate of this Cell's upper left hand corner.
 	 * 
 	 * @return the x-coordinate of this Cell's upper left hand corner
@@ -60,7 +60,7 @@ public class Cell extends JComponent
 		return x;
 	}
 
-	/*
+	/**
 	 * Gets the y-coordinate of this Cell's upper left hand corner.
 	 * 
 	 * @return the y-coordinate of this Cell's upper left hand corner
@@ -71,7 +71,7 @@ public class Cell extends JComponent
 		return y;
 	}
 
-	/*
+	/**
 	 * Gets the width of this cell.
 	 * 
 	 * @return the width of this cell
@@ -82,7 +82,7 @@ public class Cell extends JComponent
 		return width;
 	}
 
-	/*
+	/**
 	 * Gets the height of this cell.
 	 * 
 	 * @return the height of this cell
@@ -93,10 +93,10 @@ public class Cell extends JComponent
 		return height;
 	}
 	
-	/*
+	/**
 	 * Paints the interior of this Cell.
 	 * 
-	 * @param g the the <code>Graphics</code> object to protect
+	 * @param g the <code>Graphics</code> object to protect
 	 */
 	@Override
 	public void paintComponent(Graphics g)

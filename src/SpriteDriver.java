@@ -1,5 +1,10 @@
 import javax.swing.JFrame;
 
+/**
+ * Driver for the Sprite project.
+ *
+ * @author Winston Lee
+ */
 public class SpriteDriver
 {
     public static void main(String[] args)

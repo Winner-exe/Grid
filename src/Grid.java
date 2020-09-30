@@ -2,8 +2,8 @@ import java.awt.*;
 
 import javax.swing.JPanel;
 
-/*
- * The base class representing a 10 x 10 grid.
+/**
+ * The base class representing a grid.
  * 
  * @author Winston Lee
  */
@@ -13,8 +13,8 @@ public class Grid extends JPanel
 	private final int CELL_WIDTH, CELL_HEIGHT;
 	private final Cell[][] grid;
 	
-	/*
-	 * Constructs a panel with a 10 x 10 grid.
+	/**
+	 * Constructs a panel with a grid.
 	 */
 	public Grid(int rows, int columns)
 	{
@@ -38,15 +38,14 @@ public class Grid extends JPanel
 		this.repaint();
 	}
 
-	/*
-	 * Paints the interior of this Cell.
+	/**
+	 * Paints the grid.
 	 * 
-	 * @param g the the <code>Graphics</code> object to protect
+	 * @param g the <code>Graphics</code> object to protect
 	 */
 	@Override
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		//To be implemented.
 	}
 }

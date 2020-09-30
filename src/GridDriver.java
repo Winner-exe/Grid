@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import javax.swing.JFrame;
 
-/*
+/**
  * Driver for the Grid project.
  * 
  * @author Winston Lee
