@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 public class SpritePanel extends JPanel implements ActionListener
 {
-    private Sprite sprite;
+    private Sprite gardenia, calem, red;
     private Timer timer;
 
     /**
@@ -17,7 +17,9 @@ public class SpritePanel extends JPanel implements ActionListener
      */
     public SpritePanel()
     {
-        sprite = new Sprite("sprite.png", 4, 3);
+        gardenia = new Sprite("gardenia-sprite.png", 4, 3);
+        calem = new Sprite("calem-sprite.png", 4, 3);
+        red = new Sprite("red-sprite.png", 4, 4);
         timer = new Timer(500, this);
 
         this.repaint();
@@ -44,6 +46,8 @@ public class SpritePanel extends JPanel implements ActionListener
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        sprite.draw((Graphics2D) g, 50, 50, this);
+        gardenia.draw((Graphics2D) g, 50, 50, this);
+        calem.draw((Graphics2D) g, 100, 50, this);
+        red.draw((Graphics2D) g, 50, 100, this);
     }
 }
