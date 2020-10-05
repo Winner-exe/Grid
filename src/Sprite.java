@@ -14,7 +14,7 @@ public class Sprite implements Iterable<BufferedImage>
 {
 	private BufferedImage img;
 	private final int frameWidth, frameHeight, rows, columns;
-	private final Iterator<BufferedImage> iter;
+	private Iterator<BufferedImage> iter;
 
 	/**
 	 * Initializes a sprite object given a sprite sheet file and the rows and columns of the sheet.
@@ -66,6 +66,11 @@ public class Sprite implements Iterable<BufferedImage>
 	{
 		if (iter.hasNext())
 			g.drawImage(iter.next(), x, y, observer);
+		else
+		{
+			iter = iterator();
+			g.drawImage(iter.next(), x, y, observer);
+		}
 	}
 
 	/**
@@ -97,7 +102,8 @@ public class Sprite implements Iterable<BufferedImage>
 			BufferedImage frame = img.getSubimage(cursorColumn * frameWidth, cursorRow * frameHeight,
 												  frameWidth, frameHeight);
 			cursorColumn = (cursorColumn + 1) % columns;
-			cursorRow = (cursorRow + 1) % rows;
+			if (cursorColumn == 0)
+				cursorRow++;
 			return frame;
 		}
 	}
