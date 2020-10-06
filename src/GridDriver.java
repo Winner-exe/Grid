@@ -21,6 +21,7 @@ public final class GridDriver {
 		frame.setVisible(true);
 		frame.setFocusable(true);
 		frame.setSize(1280, 1280);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 }

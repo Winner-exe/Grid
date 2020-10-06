@@ -21,8 +21,8 @@ public class Grid extends JPanel
 		this.setLayout(null);
 		this.setBackground(Color.BLACK);
 		
-		CELL_WIDTH = 100;
-		CELL_HEIGHT = 100;
+		CELL_WIDTH = 50;
+		CELL_HEIGHT = 50;
 		
 		grid = new Cell[rows][columns];
 		
