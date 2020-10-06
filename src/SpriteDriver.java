@@ -5,7 +5,7 @@ import javax.swing.JFrame;
  *
  * @author Winston Lee
  */
-public class SpriteDriver
+public final class SpriteDriver
 {
     public static void main(String[] args)
     {

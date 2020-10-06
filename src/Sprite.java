@@ -12,9 +12,9 @@ import javax.imageio.*;
  */
 public class Sprite implements Iterable<BufferedImage>
 {
-	private BufferedImage img;
-	private final int frameWidth, frameHeight, rows, columns;
-	private Iterator<BufferedImage> iter;
+	protected BufferedImage img;
+	protected final int frameWidth, frameHeight, rows, columns;
+	protected Iterator<BufferedImage> iter;
 
 	/**
 	 * Initializes a sprite object given a sprite sheet file and the rows and columns of the sheet.
