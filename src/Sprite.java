@@ -60,16 +60,16 @@ public class Sprite implements Iterable<BufferedImage>
 	 * @param g the <code>Graphics</code> Graphics object to protect
 	 * @param x the x-coordinate where this frame should be drawn
 	 * @param y the y-coordinate where this frame should be drawn
-	 * @param observer object to be notified as more of the image is converted
+	 * @param obs object to be notified as more of the image is converted
 	 */
-	public void draw(Graphics2D g, int x, int y, ImageObserver observer)
+	public void draw(Graphics2D g, int x, int y, ImageObserver obs)
 	{
 		if (iter.hasNext())
-			g.drawImage(iter.next(), x, y, observer);
+			g.drawImage(iter.next(), x, y, obs);
 		else
 		{
 			iter = iterator();
-			g.drawImage(iter.next(), x, y, observer);
+			g.drawImage(iter.next(), x, y, obs);
 		}
 	}
 
