@@ -4,7 +4,8 @@ import java.awt.image.ImageObserver;
 
 public class GriddedSprite extends Sprite
 {
-    private int x, y, scale, theta;
+    private int x, y;
+    private double scale, theta;
     private AffineTransform transform;
 
     public GriddedSprite(String fileName, int rows, int columns)
@@ -14,13 +15,12 @@ public class GriddedSprite extends Sprite
         this.transform = new AffineTransform();
     }
 
-    public GriddedSprite(String fileName, int rows, int columns, int tx, int ty, int scale, int theta)
+    public GriddedSprite(String fileName, int rows, int columns, int tx, int ty, double scale, double theta)
     {
         super(fileName, rows, columns);
-        this.x = tx;
-        this.y = ty;
-        this.scale = scale;
-        this.theta = theta;
+        setLocation(tx, ty);
+        setScale(scale);
+        setTheta(theta);
 
         updateTransform();
     }
@@ -30,12 +30,12 @@ public class GriddedSprite extends Sprite
         this.transform = AffineTransform.getTranslateInstance(x, y);
         transform.scale(scale, scale);
         if (theta % 90 == 0)
-            transform.quadrantRotate(theta / 90);
+            transform.quadrantRotate((int) (theta / 90));
         else
             transform.rotate(theta);
     }
 
-    public void setTranslate(int tx, int ty)
+    public void setLocation(int tx, int ty)
     {
         this.x = tx;
         this.y = ty;
@@ -43,16 +43,38 @@ public class GriddedSprite extends Sprite
         updateTransform();
     }
 
-    public void setScale(int scale)
+    public void setScale(double scale)
     {
         this.scale = scale;
 
         updateTransform();
     }
 
-    public void setTheta(int theta)
+    public void setTheta(double theta)
     {
         this.theta = theta;
+
+        updateTransform();
+    }
+
+    public void translate(int tx, int ty)
+    {
+        this.x += tx;
+        this.y += ty;
+
+        updateTransform();
+    }
+
+    public void scale(double scale)
+    {
+        this.scale *= scale;
+
+        updateTransform();
+    }
+
+    public void rotate(double deltaTheta)
+    {
+        this.theta += deltaTheta;
 
         updateTransform();
     }
