@@ -32,9 +32,11 @@ public class GriddedSprite extends Sprite
     private void updateTransform()
     {
         if (theta % 90 == 0)
-            this.transform = AffineTransform.getQuadrantRotateInstance((int) (theta / 90), x + frameWidth / 2, y + frameHeight / 2);
+            this.transform = AffineTransform.getQuadrantRotateInstance((int) (theta / 90), x + frameWidth / 2,
+                                                                y + frameHeight / 2);
         else
-            this.transform = AffineTransform.getRotateInstance(theta, x + frameWidth / 2, y + frameHeight / 2);
+            this.transform = AffineTransform.getRotateInstance(theta, x + frameWidth / 2,
+                                                        y + frameHeight / 2);
         transform.translate(x, y);
         transform.scale(scale, scale);
     }
