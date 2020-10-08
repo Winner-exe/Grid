@@ -17,9 +17,9 @@ public class GriddedSpritePanel extends JPanel implements ActionListener
         scaleSlider = Math.PI / -2;
 
         leaf = new GriddedSprite("leaf-sprite.png", 4, 4);
-        leaf.setLocation(500, 0);
+        leaf.setLocation(500, 250);
 
-        timer = new Timer(500, this);
+        timer = new Timer(50, this);
 
         this.repaint();
         timer.start();
@@ -35,9 +35,10 @@ public class GriddedSpritePanel extends JPanel implements ActionListener
     {
         super.paintComponent(g);
 
-        red.translate(1, 1);
+        red.translate(5, 5);
         ash.setScale(Math.sin(scaleSlider) + 2);
-        leaf.rotate(Math.PI/180);
+        scaleSlider += Math.PI / 18;
+        leaf.rotate(Math.PI/2);
 
         red.draw((Graphics2D) g, this);
         ash.draw((Graphics2D) g, this);

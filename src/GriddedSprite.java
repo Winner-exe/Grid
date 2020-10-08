@@ -12,7 +12,11 @@ public class GriddedSprite extends Sprite
     {
         super(fileName, rows, columns);
 
-        this.transform = new AffineTransform();
+        setLocation(0, 0);
+        setScale(1);
+        setTheta(0);
+
+        updateTransform();
     }
 
     public GriddedSprite(String fileName, int rows, int columns, int tx, int ty, double scale, double theta)
@@ -27,12 +31,12 @@ public class GriddedSprite extends Sprite
 
     private void updateTransform()
     {
-        this.transform = AffineTransform.getTranslateInstance(x, y);
-        transform.scale(scale, scale);
         if (theta % 90 == 0)
-            transform.quadrantRotate((int) (theta / 90));
+            this.transform = AffineTransform.getQuadrantRotateInstance((int) (theta / 90), x + frameWidth / 2, y + frameHeight / 2);
         else
-            transform.rotate(theta);
+            this.transform = AffineTransform.getRotateInstance(theta, x + frameWidth / 2, y + frameHeight / 2);
+        transform.translate(x, y);
+        transform.scale(scale, scale);
     }
 
     public void setLocation(int tx, int ty)
