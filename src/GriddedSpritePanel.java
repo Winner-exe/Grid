@@ -38,7 +38,7 @@ public class GriddedSpritePanel extends JPanel implements ActionListener
         red.translate(5, 5);
         ash.setScale(Math.sin(scaleSlider) + 2);
         scaleSlider += Math.PI / 18;
-        leaf.rotate(Math.PI/2);
+        leaf.rotate(Math.PI/36);
 
         red.draw((Graphics2D) g, this);
         ash.draw((Graphics2D) g, this);
