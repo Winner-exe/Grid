@@ -2,12 +2,20 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * Panel class for animating a sprite with transformations.
+ *
+ * @author Winston Lee
+ */
 public class GriddedSpritePanel extends JPanel implements ActionListener
 {
     private GriddedSprite red, ash, leaf;
-    private double scaleSlider;
+    private double scaleSlider; //Varies the scale of the "ash" sprite
     private Timer timer;
 
+    /**
+     * Constructs the panel and begins animating the sprite sheet with transformations.
+     */
     public GriddedSpritePanel()
     {
         red = new GriddedSprite("red-sprite.png", 4, 4);
@@ -25,11 +33,22 @@ public class GriddedSpritePanel extends JPanel implements ActionListener
         timer.start();
     }
 
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e the event to be processed
+     */
+    @Override
     public void actionPerformed(ActionEvent e)
     {
         this.repaint();
     }
 
+    /**
+     * Animates the sprite with transformations.
+     *
+     * @param g the <code>Graphics</code> object to protect
+     */
     @Override
     public void paintComponent(Graphics g)
     {

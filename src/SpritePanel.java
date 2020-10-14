@@ -13,7 +13,7 @@ public class SpritePanel extends JPanel implements ActionListener
     private Timer timer;
 
     /**
-     * Constructs the panel and begins animating the sprite sheet
+     * Constructs the panel and begins animating the sprite sheet.
      */
     public SpritePanel()
     {
