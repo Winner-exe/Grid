@@ -10,6 +10,7 @@ import javax.swing.*;
 public class GriddedSpritePanel extends JPanel implements ActionListener
 {
     private GriddedSprite red, ash, leaf;
+    private double locationSlider; //Varies the location of the "red" sprite
     private double scaleSlider; //Varies the scale of the "ash" sprite
     private Timer timer;
 
@@ -19,6 +20,7 @@ public class GriddedSpritePanel extends JPanel implements ActionListener
     public GriddedSpritePanel()
     {
         red = new GriddedSprite("red-sprite.png", 4, 4);
+        locationSlider = 0;
 
         ash = new GriddedSprite("ash-sprite.png", 4, 4);
         ash.setLocation(0, 500);
@@ -54,7 +56,8 @@ public class GriddedSpritePanel extends JPanel implements ActionListener
     {
         super.paintComponent(g);
 
-        red.translate(5, 5);
+        red.setLocation((int)(500*Math.sin(locationSlider)+500), (int)(250*Math.pow(Math.cos(locationSlider), 2)));
+        locationSlider += Math.PI/36;
         ash.setScale(Math.sin(scaleSlider) + 2);
         scaleSlider += Math.PI / 18;
         leaf.rotate(Math.PI/36);
