@@ -10,7 +10,7 @@ import java.awt.image.ImageObserver;
 public class GriddedSprite extends Sprite
 {
     private int x, y;
-    private double scale, theta;
+    private double scaleX, scaleY, theta;
     private AffineTransform transform;
 
     /**
@@ -25,7 +25,7 @@ public class GriddedSprite extends Sprite
         super(fileName, rows, columns);
 
         setLocation(0, 0);
-        setScale(1);
+        setScale(1, 1);
         setTheta(0);
 
         updateTransform();
@@ -39,14 +39,16 @@ public class GriddedSprite extends Sprite
 	 * @param columns the number of columns in the sprite sheet
 	 * @param tx the initial x-coordinate of this sprite
 	 * @param ty the initial y-coordinate of this sprite
-	 * @param scale the dilation factor for this sprite
+	 * @param scaleX the X dilation factor for this sprite
+     * @param scaleY the Y dilation factor for this sprite
 	 * @param theta the rotation angle for this sprite
      */
-    public GriddedSprite(String fileName, int rows, int columns, int tx, int ty, double scale, double theta)
+    public GriddedSprite(String fileName, int rows, int columns, int tx, int ty,
+                         double scaleX, double scaleY, double theta)
     {
         super(fileName, rows, columns);
         setLocation(tx, ty);
-        setScale(scale);
+        setScale(scaleX, scaleY);
         setTheta(theta);
 
         updateTransform();
@@ -58,13 +60,13 @@ public class GriddedSprite extends Sprite
     private void updateTransform()
     {
         if (theta % 90 == 0)
-            this.transform = AffineTransform.getQuadrantRotateInstance((int) (theta / 90), x + frameWidth / 2,
-                                                                y + frameHeight / 2);
+            this.transform = AffineTransform.getQuadrantRotateInstance((int) (theta / 90), x + frameWidth / 2.,
+                                                                y + frameHeight / 2.);
         else
-            this.transform = AffineTransform.getRotateInstance(theta, x + frameWidth / 2,
-                                                        y + frameHeight / 2);
+            this.transform = AffineTransform.getRotateInstance(theta, x + frameWidth / 2.,
+                                                        y + frameHeight / 2.);
         transform.translate(x, y);
-        transform.scale(scale, scale);
+        transform.scale(scaleX, scaleY);
     }
 
 	/**
@@ -84,11 +86,13 @@ public class GriddedSprite extends Sprite
 	/**
 	 * Sets the scale factor (based off of the original image size) for this sprite.
 	 *
-	 * @param scale the new dilation factor for this sprite
+	 * @param scaleX the new X dilation factor for this sprite
+     * @param scaleY the new Y dilation factor for this sprite
 	 */
-    public void setScale(double scale)
+    public void setScale(double scaleX, double scaleY)
     {
-        this.scale = scale;
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
 
         updateTransform();
     }
@@ -122,11 +126,13 @@ public class GriddedSprite extends Sprite
 	/**
 	 * Applies a dilation to this sprite in its current state.
 	 *
-	 * @param scale the dilation factor
+	 * @param scaleX the X dilation factor
+     * @param scaleY the Y dilation factor
 	 */
-    public void scale(double scale)
+    public void scale(double scaleX, double scaleY)
     {
-        this.scale *= scale;
+        this.scaleX *= scaleX;
+        this.scaleY *= scaleY;
 
         updateTransform();
     }

@@ -43,6 +43,16 @@ public class Sprite implements Iterable<BufferedImage>
 		iter = iterator();
 	}
 
+	public int getFrameWidth()
+	{
+		return frameWidth;
+	}
+
+	public int getFrameHeight()
+	{
+		return frameHeight;
+	}
+
 	/**
 	 * Creates an iterator over the frames of the sprite sheet.
 	 *

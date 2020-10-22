@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.ImageObserver;
 
 import javax.swing.JComponent;
 import javax.swing.border.LineBorder;
@@ -15,6 +16,8 @@ public class Cell extends JComponent
 	private final int y;
 	private final int width;
 	private final int height;
+	private GriddedSprite sprite;
+	private boolean hasSprite;
 
 	/**
 	 * Constructs a new Cell whose upper-left corner is specified as (x,y) and whose width and height are specified by the arguments of the same name.
@@ -30,6 +33,7 @@ public class Cell extends JComponent
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.hasSprite = false;
 		setLayout(null);
 		setBounds(x, y, width, height);
 		setBackground(new Color(0, 0, 0, 0));
@@ -92,6 +96,23 @@ public class Cell extends JComponent
 	{
 		return height;
 	}
+
+	public boolean hasSprite()
+	{
+		return hasSprite;
+	}
+
+	public void setSprite(GriddedSprite sprite)
+	{
+		this.hasSprite = true;
+		this.sprite = sprite;
+	}
+
+	public void loadSprite(Graphics2D g, ImageObserver obs)
+	{
+		if (hasSprite())
+			sprite.draw(g, obs);
+	}
 	
 	/**
 	 * Paints the interior of this Cell.
@@ -102,7 +123,6 @@ public class Cell extends JComponent
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		//To be implemented.
 	}
 	
 }

@@ -58,7 +58,7 @@ public class GriddedSpritePanel extends JPanel implements ActionListener
 
         red.setLocation((int)(500*Math.sin(locationSlider)+500), (int)(250*Math.pow(Math.cos(locationSlider), 2)));
         locationSlider += Math.PI/36;
-        ash.setScale(Math.sin(scaleSlider) + 2);
+        ash.setScale(Math.sin(scaleSlider) + 2, Math.sin(scaleSlider) + 2);
         scaleSlider += Math.PI / 18;
         leaf.rotate(Math.PI/36);
 

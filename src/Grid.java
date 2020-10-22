@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 public class Grid extends JPanel
 {
 	private static final long serialVersionUID = 2892865424401791072L;
-	private final int CELL_WIDTH, CELL_HEIGHT;
 	private final Cell[][] grid;
 	
 	/**
@@ -20,9 +19,9 @@ public class Grid extends JPanel
 	{
 		this.setLayout(null);
 		this.setBackground(Color.BLACK);
-		
-		CELL_WIDTH = 50;
-		CELL_HEIGHT = 50;
+
+		int CELL_WIDTH = 50;
+		int CELL_HEIGHT = 50;
 		
 		grid = new Cell[rows][columns];
 		
@@ -31,6 +30,13 @@ public class Grid extends JPanel
 			for (int j = 1; j <= grid[0].length; j++)
 			{
 				grid[i-1][j-1] = new Cell(CELL_WIDTH * j, CELL_HEIGHT * i, CELL_WIDTH, CELL_HEIGHT);
+
+				GriddedSprite sprite = new GriddedSprite("background.png", 1, 1);
+				sprite.setLocation(grid[i-1][j-1].getX(), grid[i-1][j-1].getY());
+				sprite.setScale((double)(grid[i-1][j-1].getWidth()) / sprite.getFrameWidth(),
+						(double)(grid[i-1][j-1].getHeight()) / sprite.getFrameHeight());
+
+				grid[i-1][j-1].setSprite(sprite);
 				this.add(grid[i-1][j-1]);
 			}
 		}
@@ -47,5 +53,9 @@ public class Grid extends JPanel
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+		//noinspection ForLoopReplaceableByForEach
+		for (int i = 0; i < grid.length; i++)
+			for (int j = 0; j < grid[0].length; j++)
+				grid[i][j].loadSprite((Graphics2D) g, this);
 	}
 }
