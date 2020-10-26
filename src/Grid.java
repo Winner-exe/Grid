@@ -1,5 +1,8 @@
 import java.awt.*;
-
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import javax.sound.sampled.*;
 import javax.swing.JPanel;
 
 /**
@@ -40,7 +43,19 @@ public class Grid extends JPanel
 				this.add(grid[i-1][j-1]);
 			}
 		}
-		
+		try
+		{
+			File music = Path.of("src","halland.wav").toAbsolutePath().toFile();
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(music.toURI().toURL());
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioIn);
+			clip.start();
+		}
+		catch (UnsupportedAudioFileException | IOException | LineUnavailableException e)
+		{
+			e.printStackTrace();
+		}
+
 		this.repaint();
 	}
 

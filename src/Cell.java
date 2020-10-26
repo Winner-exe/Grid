@@ -97,17 +97,33 @@ public class Cell extends JComponent
 		return height;
 	}
 
+	/**
+	 * Checks whether or not this cell has a sprite set to draw.
+	 *
+	 * @return true if this cell has a sprite to draw, false otherwise
+	 */
 	public boolean hasSprite()
 	{
 		return hasSprite;
 	}
 
+	/**
+	 * Sets the sprite for this cell to draw.
+	 *
+	 * @param sprite the sprite to draw
+	 */
 	public void setSprite(GriddedSprite sprite)
 	{
 		this.hasSprite = true;
 		this.sprite = sprite;
 	}
 
+	/**
+	 * Draws the sprite in this cell provided that a sprite has been previously set.
+	 *
+	 * @param g the <code>Graphics</code> object to protect
+	 * @param obs object to be notified as more of the image is converted
+	 */
 	public void loadSprite(Graphics2D g, ImageObserver obs)
 	{
 		if (hasSprite())
