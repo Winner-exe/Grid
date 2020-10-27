@@ -15,8 +15,7 @@ public class Grid extends JPanel
 {
 	private static final long serialVersionUID = 2892865424401791072L;
 	private final Cell[][] grid;
-	private final Random rng;
-	
+
 	/**
 	 * Constructs a panel with a grid.
 	 */
@@ -30,7 +29,7 @@ public class Grid extends JPanel
 		
 		grid = new Cell[rows][columns];
 
-		rng = new Random();
+		Random rng = new Random();
 		
 		for (int i = 1; i <= grid.length; i++)
 		{
