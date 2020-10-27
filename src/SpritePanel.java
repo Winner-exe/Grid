@@ -9,8 +9,9 @@ import javax.swing.*;
  */
 public class SpritePanel extends JPanel implements ActionListener
 {
-    private Sprite red, ash, leaf;
-    private Timer timer;
+    private final Sprite red;
+    private final Sprite ash;
+    private final Sprite leaf;
 
     /**
      * Constructs the panel and begins animating the sprite sheet.
@@ -20,7 +21,7 @@ public class SpritePanel extends JPanel implements ActionListener
         red = new Sprite("red-sprite.png", 4, 4);
         ash = new Sprite("ash-sprite.png", 4, 4);
         leaf = new Sprite("leaf-sprite.png", 4, 4);
-        timer = new Timer(500, this);
+        Timer timer = new Timer(500, this);
 
         this.repaint();
         timer.start();

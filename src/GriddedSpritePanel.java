@@ -9,10 +9,11 @@ import javax.swing.*;
  */
 public class GriddedSpritePanel extends JPanel implements ActionListener
 {
-    private GriddedSprite red, ash, leaf;
+    private final GriddedSprite red;
+    private final GriddedSprite ash;
+    private final GriddedSprite leaf;
     private double locationSlider; //Varies the location of the "red" sprite
     private double scaleSlider; //Varies the scale of the "ash" sprite
-    private Timer timer;
 
     /**
      * Constructs the panel and begins animating the sprite sheet with transformations.
@@ -29,7 +30,7 @@ public class GriddedSpritePanel extends JPanel implements ActionListener
         leaf = new GriddedSprite("leaf-sprite.png", 4, 4);
         leaf.setLocation(500, 250);
 
-        timer = new Timer(50, this);
+        Timer timer = new Timer(50, this);
 
         this.repaint();
         timer.start();

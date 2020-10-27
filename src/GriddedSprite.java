@@ -43,6 +43,7 @@ public class GriddedSprite extends Sprite
      * @param scaleY the Y dilation factor for this sprite
 	 * @param theta the rotation angle for this sprite
      */
+    @SuppressWarnings("unused")
     public GriddedSprite(String fileName, int rows, int columns, int tx, int ty,
                          double scaleX, double scaleY, double theta)
     {
@@ -115,6 +116,7 @@ public class GriddedSprite extends Sprite
 	 * @param tx the distance by which coordinates are translated in the x-axis direction
 	 * @param ty the distance by which coordinates are translated in the y-axis direction
 	 */
+    @SuppressWarnings("unused")
     public void translate(int tx, int ty)
     {
         this.x += tx;
@@ -129,6 +131,7 @@ public class GriddedSprite extends Sprite
 	 * @param scaleX the X dilation factor
      * @param scaleY the Y dilation factor
 	 */
+    @SuppressWarnings("unused")
     public void scale(double scaleX, double scaleY)
     {
         this.scaleX *= scaleX;
