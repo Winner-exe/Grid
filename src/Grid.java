@@ -2,6 +2,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Random;
 import javax.sound.sampled.*;
 import javax.swing.JPanel;
 
@@ -14,6 +15,7 @@ public class Grid extends JPanel
 {
 	private static final long serialVersionUID = 2892865424401791072L;
 	private final Cell[][] grid;
+	private final Random rng;
 	
 	/**
 	 * Constructs a panel with a grid.
@@ -27,6 +29,8 @@ public class Grid extends JPanel
 		int CELL_HEIGHT = 50;
 		
 		grid = new Cell[rows][columns];
+
+		rng = new Random();
 		
 		for (int i = 1; i <= grid.length; i++)
 		{
@@ -35,6 +39,8 @@ public class Grid extends JPanel
 				grid[i-1][j-1] = new Cell(CELL_WIDTH * j, CELL_HEIGHT * i, CELL_WIDTH, CELL_HEIGHT);
 
 				GriddedSprite sprite = new GriddedSprite("background.png", 1, 1);
+				if (rng.nextBoolean())
+					sprite = new GriddedSprite("path.png", 1, 1);
 				sprite.setLocation(grid[i-1][j-1].getX(), grid[i-1][j-1].getY());
 				sprite.setScale((double)(grid[i-1][j-1].getWidth()) / sprite.getFrameWidth(),
 						(double)(grid[i-1][j-1].getHeight()) / sprite.getFrameHeight());
