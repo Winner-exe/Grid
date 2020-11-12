@@ -51,6 +51,8 @@ public class Grid extends JPanel
 		try
 		{
 			File music = Path.of("src","halland.wav").toAbsolutePath().toFile();
+			if (rng.nextBoolean())
+				music = Path.of("src","windfall.wav").toAbsolutePath().toFile();
 			AudioInputStream audioIn = AudioSystem.getAudioInputStream(music.toURI().toURL());
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioIn);
