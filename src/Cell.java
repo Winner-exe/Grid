@@ -6,7 +6,7 @@ import javax.swing.border.LineBorder;
 
 /**
  * The base class representing a single cell in a grid.
- * 
+ *
  * @author Winston Lee
  */
 public class Cell extends JComponent
@@ -16,24 +16,25 @@ public class Cell extends JComponent
 	private final int y;
 	private final int width;
 	private final int height;
-	private GriddedSprite sprite;
-	private boolean hasSprite;
+	private int tag;
+	private ArrayList<GriddedSprite> sprites;
 
 	/**
 	 * Constructs a new Cell whose upper-left corner is specified as (x,y) and whose width and height are specified by the arguments of the same name.
-	 * 
+	 *
 	 * @param x the specified X coordinate
 	 * @param y the specified Y coordinate
 	 * @param width the width of the Cell
 	 * @param height the height of the Cell
 	 */
-	public Cell(int x, int y, int width, int height)
+	public Cell(int x, int y, int width, int height, int tag)
 	{
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.hasSprite = false;
+		setTag(tag);
 		setLayout(null);
 		setBounds(x, y, width, height);
 		setBackground(new Color(0, 0, 0, 0));
@@ -42,7 +43,7 @@ public class Cell extends JComponent
 
 	/**
 	 * Checks whether this Cell "contains" the specified point, where x and y are defined to be relative to the coordinate system of this component.
-	 * 
+	 *
 	 * @param x the x coordinate of the point
 	 * @param y the y coordinate of the point
 	 * @return true if this component logically contains x,y
@@ -55,7 +56,7 @@ public class Cell extends JComponent
 
 	/**
 	 * Gets the x-coordinate of this Cell's upper left hand corner.
-	 * 
+	 *
 	 * @return the x-coordinate of this Cell's upper left hand corner
 	 */
 	@Override
@@ -66,7 +67,7 @@ public class Cell extends JComponent
 
 	/**
 	 * Gets the y-coordinate of this Cell's upper left hand corner.
-	 * 
+	 *
 	 * @return the y-coordinate of this Cell's upper left hand corner
 	 */
 	@Override
@@ -77,7 +78,7 @@ public class Cell extends JComponent
 
 	/**
 	 * Gets the width of this cell.
-	 * 
+	 *
 	 * @return the width of this cell
 	 */
 	@Override
@@ -88,7 +89,7 @@ public class Cell extends JComponent
 
 	/**
 	 * Gets the height of this cell.
-	 * 
+	 *
 	 * @return the height of this cell
 	 */
 	@Override
@@ -98,24 +99,28 @@ public class Cell extends JComponent
 	}
 
 	/**
-	 * Checks whether or not this cell has a sprite set to draw.
-	 *
-	 * @return true if this cell has a sprite to draw, false otherwise
-	 */
-	public boolean hasSprite()
-	{
-		return hasSprite;
-	}
-
-	/**
-	 * Sets the sprite for this cell to draw.
+	 * Add a sprite for this cell to draw.
 	 *
 	 * @param sprite the sprite to draw
 	 */
-	public void setSprite(GriddedSprite sprite)
+	public void addSprite(GriddedSprite sprite)
 	{
-		this.hasSprite = true;
-		this.sprite = sprite;
+		sprites.add(sprite);
+	}
+
+	public int getTag()
+	{
+		return tag;
+	}
+
+	public void setTag(int tag)
+	{
+		this.tag = tag % 2;
+
+		if (tag == 0)
+			addSprite(new GriddedSprite("background.png", 1, 1));
+		else
+			addSprite(new GriddedSprite("path.png", 1, 1));
 	}
 
 	/**
@@ -124,15 +129,14 @@ public class Cell extends JComponent
 	 * @param g the <code>Graphics</code> object to protect
 	 * @param obs object to be notified as more of the image is converted
 	 */
-	public void loadSprite(Graphics2D g, ImageObserver obs)
+	public void loadSprites(Graphics2D g, ImageObserver obs)
 	{
-		if (hasSprite())
-			sprite.draw(g, obs);
+		sprites.forEach(GriddedSprite s -> s.draw(g, obs));
 	}
-	
+
 	/**
 	 * Paints the interior of this Cell.
-	 * 
+	 *
 	 * @param g the <code>Graphics</code> object to protect
 	 */
 	@Override
@@ -140,5 +144,5 @@ public class Cell extends JComponent
 	{
 		super.paintComponent(g);
 	}
-	
+
 }
