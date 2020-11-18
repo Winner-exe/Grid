@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.image.ImageObserver;
+import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.border.LineBorder;
@@ -17,7 +18,7 @@ public class Cell extends JComponent
 	private final int width;
 	private final int height;
 	private int tag;
-	private ArrayList<GriddedSprite> sprites;
+	private final ArrayList<GriddedSprite> sprites;
 
 	/**
 	 * Constructs a new Cell whose upper-left corner is specified as (x,y) and whose width and height are specified by the arguments of the same name.
@@ -33,7 +34,7 @@ public class Cell extends JComponent
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.hasSprite = false;
+		this.sprites = new ArrayList<GriddedSprite>();
 		setTag(tag);
 		setLayout(null);
 		setBounds(x, y, width, height);
@@ -99,13 +100,23 @@ public class Cell extends JComponent
 	}
 
 	/**
-	 * Add a sprite for this cell to draw.
+	 * Adds a sprite to this cell.
 	 *
-	 * @param sprite the sprite to draw
+	 * @param sprite the sprite to add
 	 */
 	public void addSprite(GriddedSprite sprite)
 	{
 		sprites.add(sprite);
+	}
+
+	/**
+	 * Removes a sprite from this cell.
+	 *
+	 * @param sprite the sprite to remove
+	 */
+	public void removeSprite(GriddedSprite sprite)
+	{
+		sprites.remove(sprite);
 	}
 
 	public int getTag()
@@ -113,14 +124,16 @@ public class Cell extends JComponent
 		return tag;
 	}
 
-	public void setTag(int tag)
+	public Cell setTag(int tag)
 	{
 		this.tag = tag % 2;
 
 		if (tag == 0)
-			addSprite(new GriddedSprite("background.png", 1, 1));
-		else
 			addSprite(new GriddedSprite("path.png", 1, 1));
+		else
+			addSprite(new GriddedSprite("background.png", 1, 1));
+
+		return this;
 	}
 
 	/**
@@ -131,7 +144,12 @@ public class Cell extends JComponent
 	 */
 	public void loadSprites(Graphics2D g, ImageObserver obs)
 	{
-		sprites.forEach(GriddedSprite s -> s.draw(g, obs));
+		for (GriddedSprite s : sprites)
+		{
+			s.setLocation(x, y);
+			s.setScale((double)width / s.getFrameWidth(), (double)height / s.getFrameHeight());
+			s.draw(g, obs);
+		}
 	}
 
 	/**
