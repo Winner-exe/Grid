@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 /**
  * The base class representing a grid.
- * 
+ *
  * @author Winston Lee
  */
 public class Grid extends JPanel
@@ -26,11 +26,11 @@ public class Grid extends JPanel
 
 		int CELL_WIDTH = 50;
 		int CELL_HEIGHT = 50;
-		
+
 		grid = new Cell[rows][columns];
 
 		Random rng = new Random();
-		
+
 		for (int i = 1; i <= grid.length; i++)
 		{
 			for (int j = 1; j <= grid[0].length; j++)
@@ -44,7 +44,7 @@ public class Grid extends JPanel
 				sprite.setScale((double)(grid[i-1][j-1].getWidth()) / sprite.getFrameWidth(),
 						(double)(grid[i-1][j-1].getHeight()) / sprite.getFrameHeight());
 
-				grid[i-1][j-1].setSprite(sprite);
+				grid[i-1][j-1].addSprite(sprite);
 				this.add(grid[i-1][j-1]);
 			}
 		}
@@ -68,7 +68,7 @@ public class Grid extends JPanel
 
 	/**
 	 * Paints the grid.
-	 * 
+	 *
 	 * @param g the <code>Graphics</code> object to protect
 	 */
 	@Override
