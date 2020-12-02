@@ -16,10 +16,20 @@ public class Grid extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 2892865424401791072L;
 	private final Cell[][] grid;
-	private final HashSet<Integer> keys;
-	private final HashSet<Cell> paths;
-	private final javax.swing.Timer t;
-	private final Robot red;
+	private static final HashSet<Integer> keys = new HashSet<>();
+	private final HashSet<Robot> robots;
+
+	public enum Direction
+	{
+		DOWN(0), LEFT(1), RIGHT(2), UP(3);
+
+		public final int dirCode;
+
+		Direction(int dirCode)
+		{
+			this.dirCode = dirCode;
+		}
+	}
 
 	/**
 	 * Constructs a panel with a grid.
@@ -29,7 +39,7 @@ public class Grid extends JPanel implements ActionListener
 		this.setLayout(null);
 		this.setBackground(Color.BLACK);
 		this.setFocusable(true);
-		this.addKeyListener(new KAdapter());
+		this.requestFocus();
 
 		int CELL_WIDTH = 50;
 		int CELL_HEIGHT = 50;
@@ -38,11 +48,9 @@ public class Grid extends JPanel implements ActionListener
 
 		Random rng = new Random();
 
-		keys = new HashSet<Integer>();
+		HashSet<Cell> paths = new HashSet<>();
 
-		paths = new HashSet<Cell>();
-
-		t = new javax.swing.Timer(50, this);
+		javax.swing.Timer t = new javax.swing.Timer(50, this);
 
 		for (int i = 1; i <= grid.length; i++)
 		{
@@ -57,14 +65,55 @@ public class Grid extends JPanel implements ActionListener
 			}
 		}
 
-		Iterator<Cell> pathAssigner = paths.iterator();
+		//Set Keybindings
+		int[] redKeys = new int[]{KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP};
+		int[] leafKeys = new int[]{KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_W};
+		int[] ashKeys = new int[]{KeyEvent.VK_K, KeyEvent.VK_J, KeyEvent.VK_L, KeyEvent.VK_I};
 
+		//Assign start spaces for Robots
+		Iterator<Cell> pathAssigner = paths.iterator();
+		robots = new HashSet<>();
+
+		Robot red;
 		if (pathAssigner.hasNext())
-			red = new Robot("red-sprite.png", 1, 1, pathAssigner.next());
+			red = new Robot("red-sprite.png", 4, 4, pathAssigner.next(), redKeys);
 		else
 		{
-			red = new Robot("red-sprite.png", 1, 1,
-							grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0));
+			red = new Robot("red-sprite.png", 4, 4,
+							grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), redKeys);
+		}
+		robots.add(red);
+
+		Robot leaf;
+		if (pathAssigner.hasNext())
+			leaf = new Robot("leaf-sprite.png", 4, 4, pathAssigner.next(), leafKeys);
+		else
+		{
+			leaf = new Robot("leaf-sprite.png", 4, 4,
+					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), leafKeys);
+		}
+		robots.add(leaf);
+
+		Robot ash;
+		if (pathAssigner.hasNext())
+			ash = new Robot("ash-sprite.png", 4, 4, pathAssigner.next(), ashKeys);
+		else
+		{
+			ash = new Robot("ash-sprite.png", 4, 4,
+					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), ashKeys);
+		}
+		robots.add(ash);
+
+		InputMap input = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		ActionMap action = this.getActionMap();
+
+		for (Robot r : robots)
+		{
+			for (KeyStroke key : r.getInputMap().keys())
+			{
+				input.put(key, r.getInputMap().get(key));
+				action.put(r.getInputMap().get(key), r.getActionMap().get(r.getInputMap().get(key)));
+			}
 		}
 
 		try
@@ -88,7 +137,34 @@ public class Grid extends JPanel implements ActionListener
 
 	public void actionPerformed(ActionEvent e)
 	{
+		for (Robot r : robots)
+		{
+			if (keys.contains(r.getKeyBinds()[0]) && r.getRow() < grid.length - 1) {
+				r.move(grid[r.getRow() + 1][r.getColumn()]);
+				r.setDirection(Direction.DOWN);
+				keys.remove(r.getKeyBinds()[0]);
+			}
 
+			if (keys.contains(r.getKeyBinds()[1]) && r.getColumn() > 0) {
+				r.move(grid[r.getRow()][r.getColumn() - 1]);
+				r.setDirection(Direction.LEFT);
+				keys.remove(r.getKeyBinds()[1]);
+			}
+
+			if (keys.contains(r.getKeyBinds()[2]) && r.getColumn() < grid[0].length - 1) {
+				r.move(grid[r.getRow()][r.getColumn() + 1]);
+				r.setDirection(Direction.RIGHT);
+				keys.remove(r.getKeyBinds()[2]);
+			}
+
+			if (keys.contains(r.getKeyBinds()[3]) && r.getRow() > 0) {
+				r.move(grid[r.getRow() - 1][r.getColumn()]);
+				r.setDirection(Direction.UP);
+				keys.remove(r.getKeyBinds()[3]);
+			}
+		}
+
+		this.repaint();
 	}
 
 	/**
@@ -106,16 +182,37 @@ public class Grid extends JPanel implements ActionListener
 				grid[i][j].loadSprites((Graphics2D) g, this);
 	}
 
-	public class KAdapter extends KeyAdapter
+	public static class KeyPressed extends AbstractAction
 	{
-		@Override
-		public void keyPressed(KeyEvent e) {
-			keys.add(e.getKeyCode());
+		private final int keyCode;
+
+		public KeyPressed(int keyCode)
+		{
+			super();
+			this.keyCode = keyCode;
 		}
 
 		@Override
-		public void keyReleased(KeyEvent e) {
-			keys.remove(e.getKeyCode());
+		public void actionPerformed(ActionEvent e)
+		{
+			keys.add(keyCode);
+		}
+	}
+
+	public static class KeyReleased extends AbstractAction
+	{
+		private final int keyCode;
+
+		public KeyReleased(int keyCode)
+		{
+			super();
+			this.keyCode = keyCode;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			keys.remove(keyCode);
 		}
 	}
 }

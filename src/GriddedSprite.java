@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.ImageObserver;
+import java.util.stream.IntStream;
 
 /**
  * This class gives an interface for transforming sprites through the AffineTransform class.
@@ -160,12 +161,23 @@ public class GriddedSprite extends Sprite
 	 */
     public void draw(Graphics2D g, ImageObserver obs)
     {
-        if (iter.hasNext())
-            g.drawImage(iter.next(), transform, obs);
+        if (direction != null)
+        {
+            if (columnIter.hasNext())
+                g.drawImage(frames.get(new Point(direction.dirCode, columnIter.next())), transform, obs);
+            else {
+                columnIter = IntStream.range(0, columns).iterator();
+                g.drawImage(frames.get(new Point(direction.dirCode, columnIter.next())), transform, obs);
+            }
+        }
         else
         {
-            iter = iterator();
-            g.drawImage(iter.next(), transform, obs);
+            if (iter.hasNext())
+                g.drawImage(iter.next(), transform, obs);
+            else {
+                iter = iterator();
+                g.drawImage(iter.next(), transform, obs);
+            }
         }
     }
 }

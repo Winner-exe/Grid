@@ -1,8 +1,11 @@
+import org.jetbrains.annotations.NotNull;
+
+import java.awt.*;
 import java.util.*;
 import java.io.*;
 import java.nio.file.*;
-import java.awt.Graphics2D;
 import java.awt.image.*;
+import java.util.stream.IntStream;
 import javax.imageio.*;
 
 /**
@@ -14,7 +17,10 @@ public class Sprite implements Iterable<BufferedImage>
 {
 	protected BufferedImage img;
 	protected final int frameWidth, frameHeight, rows, columns;
+	protected final HashMap<Point, BufferedImage> frames;
+	protected Grid.Direction direction;
 	protected Iterator<BufferedImage> iter;
+	protected PrimitiveIterator.OfInt columnIter;
 
 	/**
 	 * Initializes a sprite object given a sprite sheet file and the rows and columns of the sheet.
@@ -39,8 +45,23 @@ public class Sprite implements Iterable<BufferedImage>
 		this.frameHeight = img.getHeight() / rows;
 		this.rows = rows;
 		this.columns = columns;
+		direction = null;
+
+		frames = new HashMap<>();
+		int rowCursor = 0;
+		int columnCursor = 0;
 
 		iter = iterator();
+		while (iter.hasNext())
+		{
+			frames.put(new Point(rowCursor, columnCursor), iter.next());
+			columnCursor = (columnCursor + 1) % columns;
+			if (columnCursor == 0)
+				rowCursor++;
+		}
+		iter = iterator();
+
+		columnIter = IntStream.range(0, columns).iterator();
 	}
 
 	public int getFrameWidth()
@@ -53,33 +74,57 @@ public class Sprite implements Iterable<BufferedImage>
 		return frameHeight;
 	}
 
+	@SuppressWarnings("unused")
+	public Grid.Direction getDirection()
+	{
+		return direction;
+	}
+
+	public void setDirection(Grid.Direction direction)
+	{
+		this.direction = direction;
+	}
+
 	/**
 	 * Creates an iterator over the frames of the sprite sheet.
 	 *
 	 * @return an iterator over the frames of the sprite sheet
 	 */
 	@Override
-	public Iterator<BufferedImage> iterator()
+	public @NotNull Iterator<BufferedImage> iterator()
 	{
 		return new SpriteIterator();
 	}
 
 	/**
 	 * Draws a frame of this sprite.
-	 *
-	 * @param g the <code>Graphics</code> Graphics object to protect
+	 *  @param g the <code>Graphics</code> Graphics object to protect
 	 * @param x the x-coordinate where this frame should be drawn
 	 * @param y the y-coordinate where this frame should be drawn
 	 * @param obs object to be notified as more of the image is converted
 	 */
 	public void draw(Graphics2D g, int x, int y, ImageObserver obs)
 	{
-		if (iter.hasNext())
-			g.drawImage(iter.next(), x, y, obs);
+		if (direction != null)
+		{
+			for (int i = 0; i < columns; i++)
+			{
+				if (columnIter.hasNext())
+					g.drawImage(frames.get(new Point(direction.dirCode, columnIter.next())), x, y, obs);
+				else {
+					columnIter = IntStream.range(0, columns).iterator();
+					g.drawImage(frames.get(new Point(direction.dirCode, columnIter.next())), x, y, obs);
+				}
+			}
+		}
 		else
 		{
-			iter = iterator();
-			g.drawImage(iter.next(), x, y, obs);
+			if (iter.hasNext())
+				g.drawImage(iter.next(), x, y, obs);
+			else {
+				iter = iterator();
+				g.drawImage(iter.next(), x, y, obs);
+			}
 		}
 	}
 

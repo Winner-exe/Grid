@@ -34,7 +34,7 @@ public class Cell extends JComponent
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.sprites = new ArrayList<GriddedSprite>();
+		this.sprites = new ArrayList<>(2);
 		setTag(tag);
 		setLayout(null);
 		setBounds(x, y, width, height);
@@ -128,10 +128,12 @@ public class Cell extends JComponent
 	{
 		this.tag = tag % 2;
 
+		sprites.add(new GriddedSprite("background.png", 1, 1));
+
 		if (tag == 0)
-			addSprite(new GriddedSprite("path.png", 1, 1));
+			sprites.set(0, new GriddedSprite("path.png", 1, 1));
 		else
-			addSprite(new GriddedSprite("background.png", 1, 1));
+			sprites.set(0, new GriddedSprite("background.png", 1, 1));
 
 		return this;
 	}

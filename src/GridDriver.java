@@ -20,6 +20,7 @@ public final class GridDriver {
 		frame.setContentPane(new Grid(rows, columns));
 		frame.setVisible(true);
 		frame.setFocusable(true);
+		frame.setFocusTraversalKeysEnabled(false);
 		frame.setSize(1280, 1280);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
