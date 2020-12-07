@@ -139,28 +139,39 @@ public class Grid extends JPanel implements ActionListener
 	{
 		for (Robot r : robots)
 		{
-			if (keys.contains(r.getKeyBinds()[0]) && r.getRow() < grid.length - 1) {
-				r.move(grid[r.getRow() + 1][r.getColumn()]);
+			if (keys.contains(r.getKeyBinds()[0])) {
 				r.setDirection(Direction.DOWN);
-				keys.remove(r.getKeyBinds()[0]);
+				if (r.getRow() < grid.length - 1) {
+					r.move(grid[r.getRow() + 1][r.getColumn()]);
+					keys.remove(r.getKeyBinds()[0]);
+				}
 			}
 
-			if (keys.contains(r.getKeyBinds()[1]) && r.getColumn() > 0) {
-				r.move(grid[r.getRow()][r.getColumn() - 1]);
+			if (keys.contains(r.getKeyBinds()[1])) {
 				r.setDirection(Direction.LEFT);
-				keys.remove(r.getKeyBinds()[1]);
+				if (r.getColumn() > 0)
+				{
+					r.move(grid[r.getRow()][r.getColumn() - 1]);
+					keys.remove(r.getKeyBinds()[1]);
+				}
 			}
 
-			if (keys.contains(r.getKeyBinds()[2]) && r.getColumn() < grid[0].length - 1) {
-				r.move(grid[r.getRow()][r.getColumn() + 1]);
+			if (keys.contains(r.getKeyBinds()[2])) {
 				r.setDirection(Direction.RIGHT);
-				keys.remove(r.getKeyBinds()[2]);
+				if (r.getColumn() < grid[0].length - 1)
+				{
+					r.move(grid[r.getRow()][r.getColumn() + 1]);
+					keys.remove(r.getKeyBinds()[2]);
+				}
 			}
 
-			if (keys.contains(r.getKeyBinds()[3]) && r.getRow() > 0) {
-				r.move(grid[r.getRow() - 1][r.getColumn()]);
+			if (keys.contains(r.getKeyBinds()[3])) {
 				r.setDirection(Direction.UP);
-				keys.remove(r.getKeyBinds()[3]);
+				if (r.getRow() > 0)
+				{
+					r.move(grid[r.getRow() - 1][r.getColumn()]);
+					keys.remove(r.getKeyBinds()[3]);
+				}
 			}
 		}
 
