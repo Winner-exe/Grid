@@ -114,7 +114,7 @@ public class Robot extends GriddedSprite
 
 	public void move(Cell destination)
 	{
-		if (destination.getTag() == 0)
+		if (destination.getTag() % 2 == 0)
 		{
 			pos.removeSprite(this);
 			this.pos = destination;

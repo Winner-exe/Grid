@@ -126,14 +126,20 @@ public class Cell extends JComponent
 
 	public Cell setTag(int tag)
 	{
-		this.tag = tag % 2;
+		this.tag = tag % 3;
 
-		sprites.add(new GriddedSprite("background.png", 1, 1));
+		if (sprites.isEmpty())
+			sprites.add(new GriddedSprite("background.png", 1, 1));
 
 		if (tag == 0)
 			sprites.set(0, new GriddedSprite("path.png", 1, 1));
-		else
+		else if (tag == 1)
 			sprites.set(0, new GriddedSprite("background.png", 1, 1));
+		else
+		{
+			sprites.set(0, new GriddedSprite("path.png", 1, 1));
+			sprites.add(1, new GriddedSprite("flag.png", 1, 1));
+		}
 
 		return this;
 	}

@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import javax.swing.JFrame;
 
 /**
@@ -8,16 +7,9 @@ import javax.swing.JFrame;
  */
 public final class GridDriver {
 
-	public static void main(String[] args)
-	{
-		Scanner scan = new Scanner(System.in);
-		System.out.print("Rows: ");
-		int rows = scan.nextInt();
-		System.out.print("Columns: ");
-		int columns = scan.nextInt();
-
+	public static void main(String[] args) {
 		JFrame frame = new JFrame("Grid");
-		frame.setContentPane(new Grid(rows, columns));
+		frame.setContentPane(new Grid());
 		frame.setVisible(true);
 		frame.setFocusable(true);
 		frame.setFocusTraversalKeysEnabled(false);
