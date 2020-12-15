@@ -238,8 +238,8 @@ public class Grid extends JPanel implements ActionListener
 		this.setFocusable(true);
 		this.requestFocus();
 
-		CELL_WIDTH = 50;
-		CELL_HEIGHT = 50;
+		CELL_WIDTH = 30;
+		CELL_HEIGHT = 30;
 
 		String maze = Maze.generateMaze();
 		Scanner scan = new Scanner(maze);
