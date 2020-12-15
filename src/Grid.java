@@ -322,6 +322,7 @@ public class Grid extends JPanel implements ActionListener
 			tracks.add(Path.of("src","windfall.wav").toAbsolutePath().toFile());
 			tracks.add(Path.of("src","summertime.wav").toAbsolutePath().toFile());
 			tracks.add(Path.of("src","route10.wav").toAbsolutePath().toFile());
+			tracks.add(Path.of("src","hoennelite4.wav").toAbsolutePath().toFile());
 			AudioInputStream audioIn = AudioSystem.getAudioInputStream(tracks.get(rng.nextInt(tracks.size())).toURI().toURL());
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioIn);
