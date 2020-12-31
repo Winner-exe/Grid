@@ -30,7 +30,7 @@ public final class Maze
         maze[0][0] = 0;
         int[] origin = new int[]{0, 0};
         Stack<int[]> mazeCells = new Stack<>();
-        HashSet<int[]> leaves = new HashSet<>();
+        ArrayList<int[]> leaves = new ArrayList<>();
         boolean isBackTracking = false;
         mazeCells.push(origin);
         while (mazeCells.peek() != origin || getValidMoves(origin) != 0) {
@@ -77,11 +77,28 @@ public final class Maze
             }
         }
 
+        //Assign endpoint
         leaves.remove(origin);
-        int[][] leafArray = new int[leaves.size()][2];
-        leafArray = leaves.toArray(leafArray);
-        int[] endpoint = leafArray[rng.nextInt(leafArray.length)];
+        int[] endpoint = leaves.get(rng.nextInt(leaves.size()));
+        leaves.remove(endpoint);
         maze[endpoint[0]][endpoint[1]] = 2;
+
+        leaves.add(origin);
+
+        //Assign start pos for RandomRobot
+        int[] randomStartPos = leaves.get(rng.nextInt(leaves.size()));
+        leaves.remove(randomStartPos);
+        maze[randomStartPos[0]][randomStartPos[1]] = 3;
+
+        //Assign start pos for RightHandRobot
+        int[] rightStartPos = leaves.get(rng.nextInt(leaves.size()));
+        leaves.remove(rightStartPos);
+        maze[rightStartPos[0]][rightStartPos[1]] = 4;
+
+        //Assign start pos for MemoryRobot
+        int[] memoryStartPos = leaves.get(rng.nextInt(leaves.size()));
+        leaves.remove(memoryStartPos);
+        maze[memoryStartPos[0]][memoryStartPos[1]] = 5;
 
         StringBuilder mazeString = new StringBuilder(dimension + " " + dimension + "\n");
         //noinspection ForLoopReplaceableByForEach

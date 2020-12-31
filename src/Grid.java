@@ -16,6 +16,8 @@ public class Grid extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 2892865424401791072L;
 	private final Cell[][] grid;
+	private Cell randomStartPos, rightStartPos, memoryStartPos;
+	@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 	private static final HashSet<Integer> keys = new HashSet<>();
 	private final int CELL_WIDTH;
 	private final int CELL_HEIGHT;
@@ -79,31 +81,31 @@ public class Grid extends JPanel implements ActionListener
 
 		Robot red;
 		if (pathAssigner.hasNext())
-			red = new Robot("red-sprite.png", 4, 4, pathAssigner.next(), redKeys);
+			red = new Robot("red-sprite.png", 4, 4, pathAssigner.next(), redKeys, grid);
 		else
 		{
 			red = new Robot("red-sprite.png", 4, 4,
-							grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), redKeys);
+							grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), redKeys, grid);
 		}
 		robots.add(red);
 
 		Robot leaf;
 		if (pathAssigner.hasNext())
-			leaf = new Robot("leaf-sprite.png", 4, 4, pathAssigner.next(), leafKeys);
+			leaf = new Robot("leaf-sprite.png", 4, 4, pathAssigner.next(), leafKeys, grid);
 		else
 		{
 			leaf = new Robot("leaf-sprite.png", 4, 4,
-					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), leafKeys);
+					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), leafKeys, grid);
 		}
 		robots.add(leaf);
 
 		Robot ash;
 		if (pathAssigner.hasNext())
-			ash = new Robot("ash-sprite.png", 4, 4, pathAssigner.next(), ashKeys);
+			ash = new Robot("ash-sprite.png", 4, 4, pathAssigner.next(), ashKeys, grid);
 		else
 		{
 			ash = new Robot("ash-sprite.png", 4, 4,
-					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), ashKeys);
+					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), ashKeys, grid);
 		}
 		robots.add(ash);
 
@@ -172,31 +174,31 @@ public class Grid extends JPanel implements ActionListener
 
 		Robot red;
 		if (pathAssigner.hasNext())
-			red = new Robot("red-sprite.png", 4, 4, pathAssigner.next(), redKeys);
+			red = new Robot("red-sprite.png", 4, 4, pathAssigner.next(), redKeys, grid);
 		else
 		{
 			red = new Robot("red-sprite.png", 4, 4,
-					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), redKeys);
+					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), redKeys, grid);
 		}
 		robots.add(red);
 
 		Robot leaf;
 		if (pathAssigner.hasNext())
-			leaf = new Robot("leaf-sprite.png", 4, 4, pathAssigner.next(), leafKeys);
+			leaf = new Robot("leaf-sprite.png", 4, 4, pathAssigner.next(), leafKeys, grid);
 		else
 		{
 			leaf = new Robot("leaf-sprite.png", 4, 4,
-					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), leafKeys);
+					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), leafKeys, grid);
 		}
 		robots.add(leaf);
 
 		Robot ash;
 		if (pathAssigner.hasNext())
-			ash = new Robot("ash-sprite.png", 4, 4, pathAssigner.next(), ashKeys);
+			ash = new Robot("ash-sprite.png", 4, 4, pathAssigner.next(), ashKeys, grid);
 		else
 		{
 			ash = new Robot("ash-sprite.png", 4, 4,
-					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), ashKeys);
+					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), ashKeys, grid);
 		}
 		robots.add(ash);
 
@@ -253,67 +255,17 @@ public class Grid extends JPanel implements ActionListener
 
 		Random rng = new Random();
 
-		javax.swing.Timer t = new javax.swing.Timer(50, this);
+		javax.swing.Timer t = new javax.swing.Timer(25, this);
 
 		//Set Keybindings
-		int[] redKeys = new int[]{KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP};
-		int[] leafKeys = new int[]{KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_W};
-		int[] ashKeys = new int[]{KeyEvent.VK_K, KeyEvent.VK_J, KeyEvent.VK_L, KeyEvent.VK_I};
 
 		robots = new HashSet<>();
-		Robot red = new Robot("red-sprite.png", 4, 4, grid[0][0], redKeys);
-		Robot leaf = new Robot("leaf-sprite.png", 4, 4, grid[0][0], leafKeys);
-		Robot ash = new Robot("ash-sprite.png", 4, 4, grid[0][0], ashKeys);
+		RandomRobot red = new RandomRobot("red-sprite.png", 4, 4, randomStartPos, grid);
+		RightRobot leaf = new RightRobot("leaf-sprite.png", 4, 4, rightStartPos, grid);
+		MemoryRobot ash = new MemoryRobot("ash-sprite.png", 4, 4, memoryStartPos, grid);
 		robots.add(red);
 		robots.add(leaf);
 		robots.add(ash);
-		/*
-		//Assign start spaces for Robots
-		Iterator<Cell> pathAssigner = paths.iterator();
-
-		Robot red;
-		if (pathAssigner.hasNext())
-			red = new Robot("red-sprite.png", 4, 4, pathAssigner.next(), redKeys);
-		else
-		{
-			red = new Robot("red-sprite.png", 4, 4,
-					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), redKeys);
-		}
-		robots.add(red);
-
-		Robot leaf;
-		if (pathAssigner.hasNext())
-			leaf = new Robot("leaf-sprite.png", 4, 4, pathAssigner.next(), leafKeys);
-		else
-		{
-			leaf = new Robot("leaf-sprite.png", 4, 4,
-					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), leafKeys);
-		}
-		robots.add(leaf);
-
-		Robot ash;
-		if (pathAssigner.hasNext())
-			ash = new Robot("ash-sprite.png", 4, 4, pathAssigner.next(), ashKeys);
-		else
-		{
-			ash = new Robot("ash-sprite.png", 4, 4,
-					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), ashKeys);
-		}
-		robots.add(ash);
-
-		 */
-
-		InputMap input = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-		ActionMap action = this.getActionMap();
-
-		for (Robot r : robots)
-		{
-			for (KeyStroke key : r.getInputMap().keys())
-			{
-				input.put(key, r.getInputMap().get(key));
-				action.put(r.getInputMap().get(key), r.getActionMap().get(r.getInputMap().get(key)));
-			}
-		}
 
 		try
 		{
@@ -326,6 +278,8 @@ public class Grid extends JPanel implements ActionListener
 			AudioInputStream audioIn = AudioSystem.getAudioInputStream(tracks.get(rng.nextInt(tracks.size())).toURI().toURL());
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioIn);
+			FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			volume.setValue(-10);
 			clip.loop(Clip.LOOP_CONTINUOUSLY);
 		}
 		catch (UnsupportedAudioFileException | IOException | LineUnavailableException e)
@@ -350,8 +304,25 @@ public class Grid extends JPanel implements ActionListener
 				int tag = scan.nextInt();
 				grid[i-1][j-1] = new Cell(CELL_WIDTH * j, CELL_HEIGHT * i, CELL_WIDTH, CELL_HEIGHT,
 						tag);
-				if (tag == 0)
-					paths.add(grid[i-1][j-1]);
+				grid[i-1][j-1].setCoordinates(new int[]{i-1, j-1});
+				switch (tag)
+				{
+					case 0:
+						paths.add(grid[i-1][j-1]);
+						break;
+					case 3:
+						randomStartPos = grid[i-1][j-1];
+						break;
+					case 4:
+						rightStartPos = grid[i-1][j-1];
+						break;
+					case 5:
+						memoryStartPos = grid[i-1][j-1];
+						break;
+					default:
+						break;
+				}
+
 				this.add(grid[i-1][j-1]);
 			}
 		}
@@ -361,40 +332,7 @@ public class Grid extends JPanel implements ActionListener
 	{
 		for (Robot r : robots)
 		{
-			if (keys.contains(r.getKeyBinds()[0])) {
-				r.setDirection(Direction.DOWN);
-				if (r.getRow() < grid.length - 1) {
-					r.move(grid[r.getRow() + 1][r.getColumn()]);
-					keys.remove(r.getKeyBinds()[0]);
-				}
-			}
-
-			if (keys.contains(r.getKeyBinds()[1])) {
-				r.setDirection(Direction.LEFT);
-				if (r.getColumn() > 0)
-				{
-					r.move(grid[r.getRow()][r.getColumn() - 1]);
-					keys.remove(r.getKeyBinds()[1]);
-				}
-			}
-
-			if (keys.contains(r.getKeyBinds()[2])) {
-				r.setDirection(Direction.RIGHT);
-				if (r.getColumn() < grid[0].length - 1)
-				{
-					r.move(grid[r.getRow()][r.getColumn() + 1]);
-					keys.remove(r.getKeyBinds()[2]);
-				}
-			}
-
-			if (keys.contains(r.getKeyBinds()[3])) {
-				r.setDirection(Direction.UP);
-				if (r.getRow() > 0)
-				{
-					r.move(grid[r.getRow() - 1][r.getColumn()]);
-					keys.remove(r.getKeyBinds()[3]);
-				}
-			}
+			r.move();
 		}
 
 		this.repaint();

@@ -18,6 +18,7 @@ public class Cell extends JComponent
 	private final int width;
 	private final int height;
 	private int tag;
+	private int[] coordinates;
 	private final ArrayList<GriddedSprite> sprites;
 
 	/**
@@ -126,12 +127,12 @@ public class Cell extends JComponent
 
 	public Cell setTag(int tag)
 	{
-		this.tag = tag % 3;
+		this.tag = tag;
 
 		if (sprites.isEmpty())
 			sprites.add(new GriddedSprite("background.png", 1, 1));
 
-		if (tag == 0)
+		if (tag == 0 || tag > 2)
 			sprites.set(0, new GriddedSprite("path.png", 1, 1));
 		else if (tag == 1)
 			sprites.set(0, new GriddedSprite("background.png", 1, 1));
@@ -142,6 +143,16 @@ public class Cell extends JComponent
 		}
 
 		return this;
+	}
+
+	public int[] getCoordinates()
+	{
+		return coordinates;
+	}
+
+	public void setCoordinates(int[] coordinates)
+	{
+		this.coordinates = coordinates;
 	}
 
 	/**
