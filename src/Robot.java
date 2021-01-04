@@ -1,5 +1,8 @@
 import javax.swing.*;
 
+/**
+ * Represents a robot solving a maze. This robot may either be used as is with keyboard controls or extended to have AI controls.
+ */
 public class Robot extends GriddedSprite
 {
 	protected Cell pos;
@@ -8,6 +11,16 @@ public class Robot extends GriddedSprite
 	private int[] keybinds;
 	protected final Cell[][] grid;
 
+	/**
+	 * Constructs a robot.
+	 *
+	 * @param fileName the name of the image file to be used as a sprite sheet
+	 * @param rows the number of rows in the sprite sheet
+	 * @param columns the number of columns in the sprite sheet
+	 * @param startPos the <code>Cell</code> initially containing this robot
+	 * @param keybinds the array of key codes to be assigned to the four movement directions
+	 * @param grid the 2D array representing the grid containing this robot
+	 */
 	public Robot(String fileName, int rows, int columns, Cell startPos, int[] keybinds, Cell[][] grid)
 	{
 		super(fileName, rows, columns);
@@ -81,9 +94,12 @@ public class Robot extends GriddedSprite
 		return actionMap;
 	}
 
+	/**
+	 * Moves the robot in a specified manner.
+	 */
 	public void move()
 	{
-
+		//Blank implementation to be overridden
 	}
 
 	public void move(Cell destination)

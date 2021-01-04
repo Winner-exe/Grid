@@ -2,10 +2,22 @@ import java.io.*;
 import java.nio.file.Path;
 import java.util.*;
 
+/**
+ * The <code>Maze</code> class contains methods to feed an encoded maze to a <code>Grid</code> object.
+ *
+ * This is accomplished by randomly generating a maze encoded as a <code>String</code> or by reading a maze from a file.
+ */
 public final class Maze
 {
     private static int[][] maze;
 
+    /**
+     * Reads a file with one or many mazes into a <code>String</code>
+     *
+     * @param fileName the name of the file containing the maze(s)
+     * @return the string encoding of one of the given mazes
+     * @throws IOException If a problem occurs when reading the maze file
+     */
     public static String getMaze(String fileName) throws IOException {
         FileReader reader = new FileReader(Path.of("src", fileName).toAbsolutePath().toFile());
         //noinspection ResultOfMethodCallIgnored
@@ -21,17 +33,26 @@ public final class Maze
         return maze.toString();
     }
 
+    /**
+     * Randomly generates a string encoding of a valid maze and writes the encoding to a .txt file
+     *
+     * @return the string encoding of the random maze
+     * @throws IOException If a problem occurs when writing to the maze file
+     */
     @SuppressWarnings("unused")
     public static String generateMaze() throws IOException {
+        //Establish maze dimensions
         int dimensionX = (int)(Math.random() * 11 + 15);
         int dimensionY = (int)(Math.random() * 11 + 15);
         maze = new int[dimensionX][dimensionY];
         Random rng = new Random();
 
+        //Fill the grid with walls
         for (int i = 0; i < maze.length; i++)
             for (int j = 0; j < maze[0].length; j++)
                 maze[i][j] = 1;
 
+        //Use a backtracking algorithm to create the paths of the maze
         maze[0][0] = 0;
         int[] origin = new int[]{0, 0};
         Stack<int[]> mazeCells = new Stack<>();
@@ -82,7 +103,7 @@ public final class Maze
             }
         }
 
-        //Assign endpoint
+        //Assign endpoint of the maze
         leaves.remove(origin);
         int[] endpoint = leaves.get(rng.nextInt(leaves.size()));
         leaves.remove(endpoint);
@@ -105,6 +126,7 @@ public final class Maze
         leaves.remove(memoryStartPos);
         maze[memoryStartPos[0]][memoryStartPos[1]] = 5;
 
+        //Encode the maze into a String
         StringBuilder mazeString = new StringBuilder(dimensionX + " " + dimensionY + "\n");
         //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < maze.length; i++) {
@@ -117,6 +139,7 @@ public final class Maze
 
         mazeString.append("%");
 
+        //Write the string encoding to a maze file
         FileWriter w = new FileWriter(Path.of("src", "Maze.txt").toAbsolutePath().toFile());
         w.append(mazeString.toString());
         w.close();
@@ -124,6 +147,12 @@ public final class Maze
         return mazeString.toString();
     }
 
+    /**
+     * Finds the possible directions to move in when creating a path
+     *
+     * @param cursor the current position
+     * @return a 4-bit integer with a 1 in every position corresponding to the integer encoding for the valid direction (encoding specified in <code>Grid.Direction</code>)
+     */
     private static int getValidMoves(int[] cursor)
     {
         int moves = 0;

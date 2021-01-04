@@ -24,12 +24,20 @@ public class Grid extends JPanel implements ActionListener
 	private final HashSet<Cell> paths;
 	private final HashSet<Robot> robots;
 
+	/**
+	 * A list of the four possible movement directions with their integer encodings.
+	 */
 	public enum Direction
 	{
 		DOWN(0), LEFT(1), RIGHT(2), UP(3);
 
 		public final int dirCode;
 
+		/**
+		 * Returns a movement direction given its integer code.
+		 *
+		 * @param dirCode the integer code for the direction; must be an integer from 0 to 3
+		 */
 		Direction(int dirCode)
 		{
 			this.dirCode = dirCode;
@@ -38,6 +46,9 @@ public class Grid extends JPanel implements ActionListener
 
 	/**
 	 * Constructs a panel with a grid.
+	 *
+	 * @param rows the number of rows in the grid
+	 * @param columns the number of columns in the grid
 	 */
 	public Grid(int rows, int columns)
 	{
@@ -140,6 +151,13 @@ public class Grid extends JPanel implements ActionListener
 		this.repaint();
 	}
 
+
+	/**
+	 * Constructs a panel with a grid based off of a given maze.
+	 *
+	 * @param mazeFile the file containing the maze encoding
+	 * @throws IOException If a problem occurs when reading the maze file
+	 */
 	public Grid(String mazeFile) throws IOException {
 		this.setLayout(null);
 		this.setBackground(Color.BLACK);
@@ -197,6 +215,11 @@ public class Grid extends JPanel implements ActionListener
 		this.repaint();
 	}
 
+	/**
+	 * Constructs a panel with a grid based off of a randomly generated maze.
+	 *
+	 * @throws IOException If a problem occurs when writing the contents of the maze to a .txt file
+	 */
 	public Grid() throws IOException {
 		this.setLayout(null);
 		this.setBackground(Color.BLACK);
@@ -254,6 +277,11 @@ public class Grid extends JPanel implements ActionListener
 		this.repaint();
 	}
 
+	/**
+	 * Decodes a maze into this grid.
+	 *
+	 * @param maze the String representing the maze
+	 */
 	private void convertMaze(String maze)
 	{
 		Scanner scan = new Scanner(maze);
@@ -291,6 +319,11 @@ public class Grid extends JPanel implements ActionListener
 		}
 	}
 
+	/**
+	 * Invoked when an action occurs.
+	 *
+	 * @param e the event to be processed
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		for (Robot r : robots)
@@ -316,16 +349,29 @@ public class Grid extends JPanel implements ActionListener
 				grid[i][j].loadSprites((Graphics2D) g, this);
 	}
 
+	/**
+	 * Represents the action of pressing a key.
+	 */
 	public static class KeyPressed extends AbstractAction
 	{
 		private final int keyCode;
 
+		/**
+		 * Creates the event of pressing a given key.
+		 *
+		 * @param keyCode the key's integer code as specified by the <code>KeyEvent</code> class.
+		 */
 		public KeyPressed(int keyCode)
 		{
 			super();
 			this.keyCode = keyCode;
 		}
 
+		/**
+		 * Invoked when an action occurs.
+		 *
+		 * @param e the event to be processed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
@@ -333,16 +379,29 @@ public class Grid extends JPanel implements ActionListener
 		}
 	}
 
+	/**
+	 * Represents the action of releasing a key.
+	 */
 	public static class KeyReleased extends AbstractAction
 	{
 		private final int keyCode;
 
+		/**
+		 * Creates the event of releasing a given key.
+		 *
+		 * @param keyCode the key's integer code as specified by the <code>KeyEvent</code> class.
+		 */
 		public KeyReleased(int keyCode)
 		{
 			super();
 			this.keyCode = keyCode;
 		}
 
+		/**
+		 * Invoked when an action occurs.
+		 *
+		 * @param e the event to be processed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
