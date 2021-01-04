@@ -9,18 +9,23 @@ public final class Maze
     public static String getMaze(String fileName) throws IOException {
         FileReader reader = new FileReader(Path.of("src", fileName).toAbsolutePath().toFile());
         //noinspection ResultOfMethodCallIgnored
-        Scanner scan = new Scanner(reader);
+        Scanner scan = new Scanner(reader).useDelimiter("%");
+        ArrayList<String> mazes = new ArrayList<>();
+        Random rng = new Random();
+        while(scan.hasNext())
+            mazes.add(scan.next());
+        Scanner scanMaze = new Scanner(mazes.get(rng.nextInt(mazes.size())));
         StringBuilder maze = new StringBuilder();
-        while(scan.hasNextLine())
-            maze.append(scan.nextLine()).append(" ");
+        while(scanMaze.hasNextLine())
+            maze.append(scanMaze.nextLine()).append(" ");
         return maze.toString();
     }
 
     @SuppressWarnings("unused")
-    public static String generateMaze()
-    {
-        int dimension = (int)(Math.random() * 11 + 15);
-        maze = new int[dimension][dimension];
+    public static String generateMaze() throws IOException {
+        int dimensionX = (int)(Math.random() * 11 + 15);
+        int dimensionY = (int)(Math.random() * 11 + 15);
+        maze = new int[dimensionX][dimensionY];
         Random rng = new Random();
 
         for (int i = 0; i < maze.length; i++)
@@ -100,7 +105,7 @@ public final class Maze
         leaves.remove(memoryStartPos);
         maze[memoryStartPos[0]][memoryStartPos[1]] = 5;
 
-        StringBuilder mazeString = new StringBuilder(dimension + " " + dimension + "\n");
+        StringBuilder mazeString = new StringBuilder(dimensionX + " " + dimensionY + "\n");
         //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[0].length; j++)
@@ -111,6 +116,10 @@ public final class Maze
         }
 
         mazeString.append("%");
+
+        FileWriter w = new FileWriter(Path.of("src", "Maze.txt").toAbsolutePath().toFile());
+        w.append(mazeString.toString());
+        w.close();
 
         return mazeString.toString();
     }

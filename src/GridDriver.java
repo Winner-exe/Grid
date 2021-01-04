@@ -1,4 +1,5 @@
 import javax.swing.JFrame;
+import java.io.IOException;
 
 /**
  * Driver for the Grid project.
@@ -7,9 +8,9 @@ import javax.swing.JFrame;
  */
 public final class GridDriver {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		JFrame frame = new JFrame("Grid");
-		frame.setContentPane(new Grid());
+		frame.setContentPane(new Grid("mazes.txt"));
 		frame.setVisible(true);
 		frame.setFocusable(true);
 		frame.setFocusTraversalKeysEnabled(false);

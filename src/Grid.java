@@ -146,8 +146,8 @@ public class Grid extends JPanel implements ActionListener
 		this.setFocusable(true);
 		this.requestFocus();
 
-		CELL_WIDTH = 50;
-		CELL_HEIGHT = 50;
+		CELL_WIDTH = 40;
+		CELL_HEIGHT = 40;
 
 		String maze = Maze.getMaze(mazeFile);
 		Scanner scan = new Scanner(maze);
@@ -161,68 +161,32 @@ public class Grid extends JPanel implements ActionListener
 
 		Random rng = new Random();
 
-		javax.swing.Timer t = new javax.swing.Timer(50, this);
+		javax.swing.Timer t = new javax.swing.Timer(25, this);
 
 		//Set Keybindings
-		int[] redKeys = new int[]{KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP};
-		int[] leafKeys = new int[]{KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_W};
-		int[] ashKeys = new int[]{KeyEvent.VK_K, KeyEvent.VK_J, KeyEvent.VK_L, KeyEvent.VK_I};
 
-		//Assign start spaces for Robots
-		Iterator<Cell> pathAssigner = paths.iterator();
 		robots = new HashSet<>();
-
-		Robot red;
-		if (pathAssigner.hasNext())
-			red = new Robot("red-sprite.png", 4, 4, pathAssigner.next(), redKeys, grid);
-		else
-		{
-			red = new Robot("red-sprite.png", 4, 4,
-					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), redKeys, grid);
-		}
+		RandomRobot red = new RandomRobot("red-sprite.png", 4, 4, randomStartPos, grid);
+		RightRobot leaf = new RightRobot("leaf-sprite.png", 4, 4, rightStartPos, grid);
+		MemoryRobot ash = new MemoryRobot("ash-sprite.png", 4, 4, memoryStartPos, grid);
 		robots.add(red);
-
-		Robot leaf;
-		if (pathAssigner.hasNext())
-			leaf = new Robot("leaf-sprite.png", 4, 4, pathAssigner.next(), leafKeys, grid);
-		else
-		{
-			leaf = new Robot("leaf-sprite.png", 4, 4,
-					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), leafKeys, grid);
-		}
 		robots.add(leaf);
-
-		Robot ash;
-		if (pathAssigner.hasNext())
-			ash = new Robot("ash-sprite.png", 4, 4, pathAssigner.next(), ashKeys, grid);
-		else
-		{
-			ash = new Robot("ash-sprite.png", 4, 4,
-					grid[rng.nextInt(grid.length)][rng.nextInt(grid[0].length)].setTag(0), ashKeys, grid);
-		}
 		robots.add(ash);
-
-		InputMap input = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-		ActionMap action = this.getActionMap();
-
-		for (Robot r : robots)
-		{
-			for (KeyStroke key : r.getInputMap().keys())
-			{
-				input.put(key, r.getInputMap().get(key));
-				action.put(r.getInputMap().get(key), r.getActionMap().get(r.getInputMap().get(key)));
-			}
-		}
 
 		try
 		{
-			File music = Path.of("src","halland.wav").toAbsolutePath().toFile();
-			if (rng.nextBoolean())
-				music = Path.of("src","windfall.wav").toAbsolutePath().toFile();
-			AudioInputStream audioIn = AudioSystem.getAudioInputStream(music.toURI().toURL());
+			ArrayList<File> tracks = new ArrayList<>();
+			tracks.add(Path.of("src","halland.wav").toAbsolutePath().toFile());
+			tracks.add(Path.of("src","windfall.wav").toAbsolutePath().toFile());
+			tracks.add(Path.of("src","summertime.wav").toAbsolutePath().toFile());
+			tracks.add(Path.of("src","route10.wav").toAbsolutePath().toFile());
+			tracks.add(Path.of("src","hoennelite4.wav").toAbsolutePath().toFile());
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(tracks.get(rng.nextInt(tracks.size())).toURI().toURL());
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioIn);
-			clip.start();
+			FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			volume.setValue(-10);
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
 		}
 		catch (UnsupportedAudioFileException | IOException | LineUnavailableException e)
 		{
@@ -233,15 +197,14 @@ public class Grid extends JPanel implements ActionListener
 		this.repaint();
 	}
 
-	public Grid()
-	{
+	public Grid() throws IOException {
 		this.setLayout(null);
 		this.setBackground(Color.BLACK);
 		this.setFocusable(true);
 		this.requestFocus();
 
-		CELL_WIDTH = 30;
-		CELL_HEIGHT = 30;
+		CELL_WIDTH = 40;
+		CELL_HEIGHT = 40;
 
 		String maze = Maze.generateMaze();
 		Scanner scan = new Scanner(maze);
