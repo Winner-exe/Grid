@@ -67,18 +67,6 @@ public class Robot extends GriddedSprite
 	}
 
 	@SuppressWarnings("unused")
-	public int getRow()
-	{
-		return pos.getY() / pos.getHeight() - 1;
-	}
-
-	@SuppressWarnings("unused")
-	public int getColumn()
-	{
-		return pos.getX() / pos.getWidth() - 1;
-	}
-
-	@SuppressWarnings("unused")
 	public int[] getKeyBinds()
 	{
 		return keybinds;
