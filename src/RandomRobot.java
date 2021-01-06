@@ -1,15 +1,30 @@
 import java.util.*;
 
+/**
+ * Represents a robot solving a maze automatically by moving in totally random directions.
+ */
 public class RandomRobot extends Robot
 {
     private final Random rng;
 
+    /**
+     * Constructs a robot.
+     *
+     * @param fileName the name of the image file to be used as a sprite sheet
+     * @param rows the number of rows in the sprite sheet
+     * @param columns the number of columns in the sprite sheet
+     * @param startPos the <code>Cell</code> initially containing this robot
+     * @param grid the 2D array representing the grid containing this robot
+     */
     public RandomRobot(String fileName, int rows, int columns, Cell startPos, Cell[][] grid) {
         super(fileName, rows, columns, startPos, null, grid);
 
         rng = new Random();
     }
 
+    /**
+     * Moves the robot automatically in a totally random direction.
+     */
     @Override
     public void move()
     {
@@ -40,6 +55,11 @@ public class RandomRobot extends Robot
         }
     }
 
+    /**
+     * Finds the valid directions this robot may move in
+     *
+     * @return the list of direction codes corresponding to valid moves
+     */
     private ArrayList<Integer> getValidMoves()
     {
         ArrayList<Integer> moves = new ArrayList<>();

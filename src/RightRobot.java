@@ -1,7 +1,13 @@
 import java.util.Objects;
 
+/**
+ * Represents a robot solving a maze automatically by sticking to the right-hand wall.
+ */
 public class RightRobot extends Robot
 {
+    /**
+     * A list of states so this robot can remember what its last move was
+     */
     private enum PreviousMove
     {
         NONE, REALIGN, MOVE_FACING, FOLLOW_WALL_DIAGONAL
@@ -9,6 +15,15 @@ public class RightRobot extends Robot
 
     private PreviousMove previousMove;
 
+    /**
+     * Constructs a robot.
+     *
+     * @param fileName the name of the image file to be used as a sprite sheet
+     * @param rows the number of rows in the sprite sheet
+     * @param columns the number of columns in the sprite sheet
+     * @param startPos the <code>Cell</code> initially containing this robot
+     * @param grid the 2D array representing the grid containing this robot
+     */
     public RightRobot(String fileName, int rows, int columns, Cell startPos, Cell[][] grid)
     {
         super(fileName, rows, columns, startPos, null, grid);
@@ -18,6 +33,9 @@ public class RightRobot extends Robot
         previousMove = PreviousMove.NONE;
     }
 
+    /**
+     * Moves this robot automatically so that it follows its right-hand wall.
+     */
     @Override
     public void move()
     {
@@ -54,6 +72,9 @@ public class RightRobot extends Robot
         }
     }
 
+    /**
+     * Turns the robot clockwise.
+     */
     private void turnClockwise()
     {
         switch (direction.dirCode)
@@ -75,6 +96,9 @@ public class RightRobot extends Robot
         }
     }
 
+    /**
+     * Turns the robot counterclockwise.
+     */
     private void turnCounterClockwise()
     {
         switch (direction.dirCode)
@@ -96,6 +120,11 @@ public class RightRobot extends Robot
         }
     }
 
+    /**
+     * Returns the cell on this robot's right-hand side
+     *
+     * @return the cell on this robot's right-hand side
+     */
     private Cell rightHand()
     {
         switch (direction.dirCode) {
@@ -121,6 +150,11 @@ public class RightRobot extends Robot
         return null;
     }
 
+    /**
+     * Returns the cell this robot is facing
+     *
+     * @return the cell this robot is facing
+     */
     private Cell facing()
     {
         switch (direction.dirCode) {

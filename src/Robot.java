@@ -66,17 +66,32 @@ public class Robot extends GriddedSprite
 		this.grid = grid;
 	}
 
+	/**
+	 * Returns the list of key codes for the movement commands.
+	 *
+	 * @return the list of key codes
+	 */
 	@SuppressWarnings("unused")
 	public int[] getKeyBinds()
 	{
 		return keybinds;
 	}
 
+	/**
+	 * Returns the map of keycodes to named actions.
+	 *
+	 * @return the map of keycodes to named actions
+	 */
 	public InputMap getInputMap()
 	{
 		return inputMap;
 	}
 
+	/**
+	 * Returns the map of action names to their respective objects.
+	 *
+	 * @return the map of action names to their respective objects
+	 */
 	public ActionMap getActionMap()
 	{
 		return actionMap;
@@ -90,6 +105,11 @@ public class Robot extends GriddedSprite
 		//Blank implementation to be overridden
 	}
 
+	/**
+	 * Moves the robot to a given cell if it is not a wall and if the robot has not already finished the maze.
+	 *
+	 * @param destination the cell this robot will move to
+	 */
 	public void move(Cell destination)
 	{
 		if ((destination.getTag() == 0 || destination.getTag() >= 2) && pos.getTag() != 2)

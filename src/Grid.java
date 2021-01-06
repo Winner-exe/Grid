@@ -241,7 +241,7 @@ public class Grid extends JPanel implements ActionListener
 
 		Random rng = new Random();
 
-		javax.swing.Timer t = new javax.swing.Timer(25, this);
+		javax.swing.Timer t = new javax.swing.Timer(250, this);
 
 		//Set Keybindings
 

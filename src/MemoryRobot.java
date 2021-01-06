@@ -1,11 +1,23 @@
 import java.util.*;
 
+/**
+ * Represents a robot solving a maze automatically by moving randomly with a bias against already visited cells.
+ */
 public class MemoryRobot extends Robot
 {
-    private final Stack<Cell> cursor;
-    private final HashSet<Cell> memory;
+    private final Stack<Cell> cursor; //Allows for backtracking and quick retrieval of the current position
+    private final HashSet<Cell> memory; //Stores all visited cells into memory with quick containment-checking
     private final Random rng;
 
+    /**
+     * Constructs a robot.
+     *
+     * @param fileName the name of the image file to be used as a sprite sheet
+     * @param rows the number of rows in the sprite sheet
+     * @param columns the number of columns in the sprite sheet
+     * @param startPos the <code>Cell</code> initially containing this robot
+     * @param grid the 2D array representing the grid containing this robot
+     */
     public MemoryRobot(String fileName, int rows, int columns, Cell startPos, Cell[][] grid)
     {
         super(fileName, rows, columns, startPos, null, grid);
@@ -19,6 +31,9 @@ public class MemoryRobot extends Robot
         rng = new Random();
     }
 
+    /**
+     * Moves this robot automatically in a random direction, but will prioritize moving to a cell not in memory.
+     */
     @Override
     public void move()
     {
@@ -111,6 +126,11 @@ public class MemoryRobot extends Robot
         }
     }
 
+    /**
+     * Returns the cells that are not walls and are 1 cell away from the robot's current position.
+     *
+     * @return a list of cells that are not walls and are 1 cell away from the robot's current position
+     */
     private ArrayList<Cell> getValidMoveDestinations()
     {
         ArrayList<Cell> moves = new ArrayList<>();
@@ -123,6 +143,11 @@ public class MemoryRobot extends Robot
         return moves;
     }
 
+    /**
+     * Returns the directions that this robot can move in to visit a cell not in memory.
+     *
+     * @return a list of directions that this robot can move in to visit a cell not in memory
+     */
     private ArrayList<Integer> getValidNewMoves()
     {
         ArrayList<Integer> moves = new ArrayList<>();
